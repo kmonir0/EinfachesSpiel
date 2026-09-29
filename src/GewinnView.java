@@ -70,6 +70,7 @@ public class GewinnView extends JFrame {
         // Bottom Panel: Button
         JPanel bottomPanel = new JPanel();
         btnNochEinmal = new JButton("Noch einmal!");
+        btnNochEinmal.setEnabled(false); // Startzustand: Deaktiviert
         bottomPanel.add(btnNochEinmal);
 
         add(bottomPanel, BorderLayout.SOUTH);
@@ -81,4 +82,18 @@ public class GewinnView extends JFrame {
     public JLabel getLblRundenergebnis() { return lblRundenergebnis; }
     public JLabel getLblGesamtpunkte() { return lblGesamtpunkte; }
     public JButton getBtnNochEinmal() { return btnNochEinmal; }
+
+    // Methode 1: Nach dem Enter-Drücken aufrufen
+    public void sperreEingabe() {
+        tfDeineZahl.setEditable(false);  // Textfeld sperren
+        btnNochEinmal.setEnabled(true);   // Button aktiv schalten
+    }
+
+    // Methode 2: Beim Klick auf "Noch einmal!" aufrufen
+    public void entsperreEingabe() {
+        tfDeineZahl.setEditable(true);   // Textfeld wieder freigeben
+        tfDeineZahl.setText("");          // Feld leeren
+        btnNochEinmal.setEnabled(false);  // Button wieder ausgrauen
+        tfDeineZahl.requestFocus();       // Cursor ins Feld setzen
+    }
 }

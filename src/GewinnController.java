@@ -46,14 +46,15 @@ public class GewinnController {
             if (model.hatGewonnen()) {
                 view.getLblGesamtpunkte().setText(String.valueOf(model.getGesamtPunkte()));
                 view.getLblRundenergebnis().setText("Gewonnen!");
-                view.getTfDeineZahl().setEditable(false);
             } else if (model.hatVerloren()) {
                 view.getLblGesamtpunkte().setText(String.valueOf(model.getGesamtPunkte()));
                 view.getLblRundenergebnis().setText("Verloren");
-                view.getTfDeineZahl().setEditable(false);
             } else {
                 view.getLblGesamtpunkte().setText(String.valueOf(model.getGesamtPunkte()));
             }
+
+            // Bedienelemente nach erfolgreicher Runde sperren
+            view.sperreEingabe();
 
         } catch (NumberFormatException ex) {
             view.getLblRundenergebnis().setText("Bitte eine Zahl eingeben!");
@@ -61,7 +62,9 @@ public class GewinnController {
     }
 
     private void resetRunde() {
-        view.getTfDeineZahl().setText("");
+        // Ruft das Entsperren in der View auf (Textfeld frei, Button grau)
+        view.entsperreEingabe();
+
         view.getTfComputerZahl().setText("");
         if (!model.hatGewonnen() && !model.hatVerloren()) {
             view.getLblRundenergebnis().setText("Tippe eine Zahl von 1 bis 9");
