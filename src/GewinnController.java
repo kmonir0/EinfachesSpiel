@@ -43,6 +43,15 @@ public class GewinnController {
             String ergText = (erg > 0 ? "+" + erg : String.valueOf(erg));
             view.getLblRundenergebnis().setText(ergText);
 
+            // Farbliches Feedback setzen (aus version-2.0)
+            if (erg > 0) {
+                view.setErgebnisFarbeGruen();
+            } else if (erg < 0) {
+                view.setErgebnisFarbeRot();
+            } else {
+                view.setErgebnisFarbeZuruecksetzen();
+            }
+
             if (model.hatGewonnen()) {
                 view.getLblGesamtpunkte().setText(String.valueOf(model.getGesamtPunkte()));
                 view.getLblRundenergebnis().setText("Gewonnen!");
@@ -53,7 +62,7 @@ public class GewinnController {
                 view.getLblGesamtpunkte().setText(String.valueOf(model.getGesamtPunkte()));
             }
 
-            // Bedienelemente nach erfolgreicher Runde sperren
+            // Bedienelemente sperren (aus version-1.1 / master)
             view.sperreEingabe();
 
         } catch (NumberFormatException ex) {
@@ -62,10 +71,14 @@ public class GewinnController {
     }
 
     private void resetRunde() {
-        // Ruft das Entsperren in der View auf (Textfeld frei, Button grau)
+        // Farbe zurücksetzen (aus version-2.0)
+        view.setErgebnisFarbeZuruecksetzen();
+
+        // Entsperren (aus version-1.1 / master)
         view.entsperreEingabe();
 
         view.getTfComputerZahl().setText("");
+
         if (!model.hatGewonnen() && !model.hatVerloren()) {
             view.getLblRundenergebnis().setText("Tippe eine Zahl von 1 bis 9");
         }
