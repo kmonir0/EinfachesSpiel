@@ -1,0 +1,11 @@
+# Ausgabe-Ordner
+out/
+
+# IntelliJ-Projektdateien
+*.iml
+.idea/
+!.idea/vcs.xml
+!.idea/codeStyles/
+
+# Systemdateien
+.DS_Store
