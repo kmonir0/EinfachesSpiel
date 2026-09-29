@@ -21,4 +21,25 @@ public class GewinnModel {
     public int getRundenErgebnis() {
         return rundenErgebnis;
     }
+    public void berechneComputerZahl() {
+        Random random = new Random();
+        this.computerZahl = random.nextInt(9) + 1; // Zahl von 1 bis 9
+    }
+
+    public void berechneRunde(int spielerZahl) {
+        this.spielerZahl = spielerZahl;
+        berechneComputerZahl();
+
+        int diff = Math.abs(this.spielerZahl - this.computerZahl);
+
+        if (diff == 0) {
+            this.rundenErgebnis = 20; // Gleiche Zahl
+        } else if (diff == 1) {
+            this.rundenErgebnis = 5;  // Um 1 größer oder kleiner
+        } else {
+            this.rundenErgebnis = -10; // Andere Zahl
+        }
+
+        this.gesamtPunkte += this.rundenErgebnis;
+    }
 }
