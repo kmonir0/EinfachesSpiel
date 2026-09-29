@@ -96,4 +96,15 @@ public class GewinnView extends JFrame {
         btnNochEinmal.setEnabled(false);  // Button wieder ausgrauen
         tfDeineZahl.requestFocus();       // Cursor ins Feld setzen
     }
+    public void setErgebnisFarbeGruen() {
+        lblRundenergebnis.setBackground(java.awt.Color.GREEN);
+    }
+
+    public void setErgebnisFarbeRot() {
+        lblRundenergebnis.setBackground(java.awt.Color.RED);
+    }
+
+    public void setErgebnisFarbeZuruecksetzen() {
+        lblRundenergebnis.setBackground(null);
+    }
 }
