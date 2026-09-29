@@ -73,6 +73,7 @@ public class GewinnView extends JFrame {
         bottomPanel.add(btnNochEinmal);
 
         add(bottomPanel, BorderLayout.SOUTH);
+        btnNochEinmal.setEnabled(false);
     }
 
     // Getter für den Controller
@@ -81,4 +82,16 @@ public class GewinnView extends JFrame {
     public JLabel getLblRundenergebnis() { return lblRundenergebnis; }
     public JLabel getLblGesamtpunkte() { return lblGesamtpunkte; }
     public JButton getBtnNochEinmal() { return btnNochEinmal; }
+
+    public void setErgebnisFarbeGruen() {
+        lblRundenergebnis.setBackground(Color.GREEN);
+    }
+
+    public void setErgebnisFarbeRot() {
+        lblRundenergebnis.setBackground(Color.RED);
+    }
+
+    public void setErgebnisFarbeZuruecksetzen() {
+        lblRundenergebnis.setBackground(null);
+    }
 }

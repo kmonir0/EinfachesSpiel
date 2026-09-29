@@ -9,7 +9,7 @@ public class GewinnController {
         this.model = model;
         this.view = view;
 
-        // Enter-Taste im Textfeld verarbeiten
+        // Listener für Enter-Taste im Textfeld
         this.view.getTfDeineZahl().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -17,7 +17,7 @@ public class GewinnController {
             }
         });
 
-        // "Noch einmal!"-Button verarbeiten
+        // Listener für "Noch einmal!"-Button
         this.view.getBtnNochEinmal().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -43,14 +43,22 @@ public class GewinnController {
             String ergText = (erg > 0 ? "+" + erg : String.valueOf(erg));
             view.getLblRundenergebnis().setText(ergText);
 
+            // Farbliches Feedback setzen (version-2.0)
+            if (erg > 0) {
+                view.setErgebnisFarbeGruen();
+            } else if (erg < 0) {
+                view.setErgebnisFarbeRot();
+            } else {
+                view.setErgebnisFarbeZuruecksetzen();
+            }
+
+            // Gewinn- / Verlustzustand auswerten
             if (model.hatGewonnen()) {
                 view.getLblGesamtpunkte().setText(String.valueOf(model.getGesamtPunkte()));
                 view.getLblRundenergebnis().setText("Gewonnen!");
-                view.getTfDeineZahl().setEditable(false);
             } else if (model.hatVerloren()) {
                 view.getLblGesamtpunkte().setText(String.valueOf(model.getGesamtPunkte()));
                 view.getLblRundenergebnis().setText("Verloren");
-                view.getTfDeineZahl().setEditable(false);
             } else {
                 view.getLblGesamtpunkte().setText(String.valueOf(model.getGesamtPunkte()));
             }
@@ -61,8 +69,11 @@ public class GewinnController {
     }
 
     private void resetRunde() {
-        view.getTfDeineZahl().setText("");
+
+        // Farbe und Felder zurücksetzen (version-2.0)
+        view.setErgebnisFarbeZuruecksetzen();
         view.getTfComputerZahl().setText("");
+
         if (!model.hatGewonnen() && !model.hatVerloren()) {
             view.getLblRundenergebnis().setText("Tippe eine Zahl von 1 bis 9");
         }
