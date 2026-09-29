@@ -38,31 +38,28 @@ public class GewinnController {
 
             // Ansicht aktualisieren
             view.getTfComputerZahl().setText(String.valueOf(model.getComputerZahl()));
+            view.getLblGesamtpunkte().setText(String.valueOf(model.getGesamtPunkte()));
 
             int erg = model.getRundenErgebnis();
-            String ergText = (erg > 0 ? "+" + erg : String.valueOf(erg));
-            view.getLblRundenergebnis().setText(ergText);
+            if (model.hatGewonnen()) {
+                view.getLblRundenergebnis().setText("Gewonnen!");
+            } else if (model.hatVerloren()) {
+                view.getLblRundenergebnis().setText("Verloren");
+            } else {
+                String ergText = (erg > 0 ? "+" + erg : String.valueOf(erg));
+                view.getLblRundenergebnis().setText(ergText);
+            }
 
-            // Farbliches Feedback setzen (aus version-2.0)
-            if (erg > 0) {
+            // Farbliches Feedback setzen
+            if (model.hatGewonnen() || erg > 0) {
                 view.setErgebnisFarbeGruen();
-            } else if (erg < 0) {
+            } else if (model.hatVerloren() || erg < 0) {
                 view.setErgebnisFarbeRot();
             } else {
                 view.setErgebnisFarbeZuruecksetzen();
             }
 
-            if (model.hatGewonnen()) {
-                view.getLblGesamtpunkte().setText(String.valueOf(model.getGesamtPunkte()));
-                view.getLblRundenergebnis().setText("Gewonnen!");
-            } else if (model.hatVerloren()) {
-                view.getLblGesamtpunkte().setText(String.valueOf(model.getGesamtPunkte()));
-                view.getLblRundenergebnis().setText("Verloren");
-            } else {
-                view.getLblGesamtpunkte().setText(String.valueOf(model.getGesamtPunkte()));
-            }
-
-            // Bedienelemente sperren (aus version-1.1 / master)
+            // Bedienelemente sperren
             view.sperreEingabe();
 
         } catch (NumberFormatException ex) {
@@ -71,10 +68,10 @@ public class GewinnController {
     }
 
     private void resetRunde() {
-        // Farbe zurücksetzen (aus version-2.0)
+        // Farbe zurücksetzen
         view.setErgebnisFarbeZuruecksetzen();
 
-        // Entsperren (aus version-1.1 / master)
+        // Entsperren in der View aufrufen
         view.entsperreEingabe();
 
         view.getTfComputerZahl().setText("");
